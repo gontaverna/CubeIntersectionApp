@@ -1,22 +1,27 @@
-﻿using CubeIntersectionApp.Presentation;
+﻿using Application.Factories;
+using Application.Services;
+using CubeIntersectionApp.Presentation;
 using Domain.Entities;
 using Domain.Services;
 using Helpers;
+using Infraestructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
 class Program
 {
-    static void Main()
+    static async Task Main()
     {
         // AQUI REGISTRAMOS LOS SERVICIOS Y EJECUTAMOS LA APLICACION
 
         var serviceProvider = ConfigureServices();
-        var cubeService = serviceProvider.GetRequiredService<ICubeService>();
+        //var cubeService = serviceProvider.GetRequiredService<ICubeService>();
         var cubeIntersectionApp = serviceProvider.GetRequiredService<CubeIntersection>();
 
-        //EJECUTAMOS LA APP DESDE LA CLASE
-        cubeIntersectionApp.Calculate();
+        await cubeIntersectionApp.Calculate(); 
+
+        Console.WriteLine("Presiona cualquier tecla para salir...");
+        Console.ReadKey();  
 
     }
 
@@ -26,6 +31,9 @@ class Program
 
         // REGISTRAMOS LOS SERVICIOS COMO SI FUESE EL STARTUP EN CASO DE APP WEB
         services.AddScoped<ICubeService, CubeService>();
+        services.AddScoped<ICubeAppService, CubeAppService>();
+        services.AddScoped<ICubeFactory, CubeFactory>();
+        services.AddScoped<ICubeRepository, CubeRepository>();
         services.AddScoped<CubeIntersection>();
 
         return services.BuildServiceProvider();

@@ -10,6 +10,6 @@ namespace Domain.Services
     public interface ICubeService
     {
         //INTERFAZ CON LOS METODOS DE DOMINIO DE NUESTRA ENTIDAD
-        public float CalculateIntersection(Cube cube1, Cube cube2);
+        float CalculateIntersection(Cube cube1, Cube cube2);
     }
 }

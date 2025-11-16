@@ -1,15 +1,19 @@
 CUBE INTERSECTION - EXPLICACIONES
 
-- Cree una aplicación de consola aplicando DDD y principios SOLID que es el proyecto de inicio donde se puede ejecutar el programa e ingresar los valores para ambos cubos y comparar su intersección
+- Cree una aplicación de consola aplicando DDD y principios SOLID. Esta app es el proyecto de inicio donde se puede ejecutar el programa e ingresar los valores para ambos cubos y comparar su intersección.
 
-- Cree una biblioteca de clase para la capa de domain y mantenerla independiente.
-En domain tenemos nuestras entidades y servicios aplicados al dominio. En este caso Cube y CubeService con su respectiva interfaz.
+- Cree una biblioteca de clase para la capa de Domain y mantenerla independiente.
+En Domain tenemos nuestras entidades y servicios aplicados al dominio. En este caso Cube que hereda de Entity (nos serviria en caso de que nuestro negocio tenga mas entidades, todas tendran ID) y CubeService(calcula intersecciones entre entidades del mismo tipo) con su respectiva interfaz.
 
-- En este caso no cree una capa de Application ya que el único caso de uso es calcular la intersección de dos cubos, ósea son casos de uso exclusivo para ese dominio, no hay conexión externa
 
-- Tampoco cree una capa de Infraestructure ya que no me parecio necesario al no necesitar persistencia de datos o conectar a la BD, si no también hubiese creado los repositorios aqui
+-Cree una biblioteca de clase para la capa de Infraestructure, en la cual aplicamos el patron de diseño de Repositorios, en este caso, usando un listado en memoria ya que no necesitamos conexión a base de datos, sin embargo, se podría extender fácilmente. 
+Aquí tenemos por un lado nuestra interfaz IRepository con los métodos comunes a todas las entidades a implementar en caso de ser necesario y se extienda nuestro negocio.
+Por otro lado tenemos nuestro CubeRepository con su respectiva interfaz  ICubeRepository que extiende de IRepository (aquí podríamos agregar métodos independientes para nuestra entidad en caso de ser necesario x ej: GetInterceptedCubes)
 
-- Cree un test unitario usando xUnit para verificar pruebas del service con casos donde intersectan y donde no
+- Cree una biblioteca de clase para la capa de Application en el cual tenemos los Factories que se van a encargar de validar y crear nuestras entidades en el repo, en este caso CubeFactory. Y tenemos los services para los casos de uso de nuestra aplicación, en este caso crear los cubos y llamar al servicio de dominio para ejectuar el calculo
+
+
+- Cree test unitarios para validar los casos de uso y el correcto funcionamiento de las capas.
 
 - Instale los nuget necesarios para aplicar inyección de dependencias y xUnit
 

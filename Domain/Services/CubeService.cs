@@ -1,9 +1,5 @@
 ﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Domain.Services
 {
@@ -21,11 +17,21 @@ namespace Domain.Services
             float half1 = cube1.Size / 2f;
             float half2 = cube2.Size / 2f;
 
-            float overlapX = Math.Max(0, Math.Min(cube1.X + half1, cube2.X + half2) - Math.Max(cube1.X - half1, cube2.X - half2));
-            float overlapY = Math.Max(0, Math.Min(cube1.Y + half1, cube2.Y + half2) - Math.Max(cube1.Y - half1, cube2.Y - half2));
-            float overlapZ = Math.Max(0, Math.Min(cube1.Z + half1, cube2.Z + half2) - Math.Max(cube1.Z - half1, cube2.Z - half2));
+            float overlapX = CalculateOverlap(cube1.X, half1, cube2.X, half2);
+            float overlapY = CalculateOverlap(cube1.Y, half1, cube2.Y, half2);
+            float overlapZ = CalculateOverlap(cube1.Z, half1, cube2.Z, half2);
 
             return overlapX * overlapY * overlapZ;
         }
+
+        private float CalculateOverlap(float center1, float half1, float center2, float half2)
+        {
+            float maxStart = Math.Max(center1 - half1, center2 - half2);
+            float minEnd = Math.Min(center1 + half1, center2 + half2);
+
+            return Math.Max(0, minEnd - maxStart);
+        }
+
+
     }
 }
